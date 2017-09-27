@@ -1,6 +1,6 @@
 package com.github.xenteros.word.game.controller;
 
-import com.github.xenteros.word.game.GameDTO;
+import com.github.xenteros.word.game.dto.GameDTO;
 import com.github.xenteros.word.game.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

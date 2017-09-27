@@ -5,12 +5,14 @@ import com.github.xenteros.word.game.enums.Winner;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -22,8 +24,8 @@ public class Round {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(mappedBy = "round")
-    private Set<Move> moves;
+    @OneToMany(mappedBy = "round", fetch = FetchType.EAGER)
+    private Set<Move> moves = new HashSet<>();
     @ManyToOne
     private Game game;
     @Enumerated(EnumType.STRING)

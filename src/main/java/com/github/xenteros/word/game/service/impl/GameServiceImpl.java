@@ -1,8 +1,9 @@
 package com.github.xenteros.word.game.service.impl;
 
-import com.github.xenteros.word.game.GameDTO;
+import com.github.xenteros.word.game.dto.GameDTO;
 import com.github.xenteros.word.game.exception.GameNotFoundException;
 import com.github.xenteros.word.game.model.Game;
+import com.github.xenteros.word.game.model.Round;
 import com.github.xenteros.word.game.model.User;
 import com.github.xenteros.word.game.repository.GameRepository;
 import com.github.xenteros.word.game.repository.UserRepository;
@@ -11,7 +12,6 @@ import com.github.xenteros.word.game.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.rmi.runtime.Log;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -36,7 +36,7 @@ public class GameServiceImpl implements GameService {
         if (game == null) {
             return createNewGame();
         }
-        return null;
+        return joinUserToExistingGame();
     }
 
     private GameDTO createNewGame() {
@@ -53,13 +53,21 @@ public class GameServiceImpl implements GameService {
         return GameDTO.fromGame(game);
     }
 
-    private Game joinUserToExistingGame() {
+    private GameDTO joinUserToExistingGame() {
 
         Game existingGame = gameRepository.findByBlackIsNull();
-        if (existingGame != null) {
+        if (existingGame == null) {
             throw new GameNotFoundException();
         }
+        User loggedUser = LoggedUserUtils.getLoggedUser();
+        User black = userRepository.findOne(loggedUser.getId());
+        existingGame.setBlack(black);
 
-        return null;
+        Round round = new Round();
+        existingGame.getRounds().add(round);
+
+        existingGame = gameRepository.save(existingGame);
+
+        return GameDTO.fromGame(existingGame);
     }
 }

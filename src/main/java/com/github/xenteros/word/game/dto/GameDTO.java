@@ -1,8 +1,6 @@
-package com.github.xenteros.word.game;
+package com.github.xenteros.word.game.dto;
 
 import com.github.xenteros.word.game.model.Game;
-
-import java.util.Objects;
 
 import static java.util.Objects.nonNull;
 
