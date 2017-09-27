@@ -1,6 +1,10 @@
 package com.github.xenteros.word.game.model;
 
+import com.github.xenteros.word.game.enums.Winner;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +26,8 @@ public class Round {
     private Set<Move> moves;
     @ManyToOne
     private Game game;
+    @Enumerated(EnumType.STRING)
+    private Winner winner;
 
     public Long getId() {
         return id;

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 /**
  * Created by agurgul on 26.09.2017.
  */
-@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired

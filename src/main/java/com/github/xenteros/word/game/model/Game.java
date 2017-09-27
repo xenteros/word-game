@@ -1,11 +1,13 @@
 package com.github.xenteros.word.game.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.time.LocalDate;
 import java.util.Set;
 
 /**
@@ -17,13 +19,14 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User white;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User black;
     private Boolean completed;
     @OneToMany(mappedBy = "game")
     private Set<Round> rounds;
+    private LocalDate createdOn;
 
     public Long getId() {
         return id;
@@ -63,5 +66,13 @@ public class Game {
 
     public void setRounds(Set<Round> rounds) {
         this.rounds = rounds;
+    }
+
+    public LocalDate getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDate createdOn) {
+        this.createdOn = createdOn;
     }
 }
